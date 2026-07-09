@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Blood Compatibility Checker</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#ff4d4d,#b00020,#5a0000);
+    font-family:'Segoe UI',sans-serif;
+}
+
+.navbar{
+    background:rgba(0,0,0,0.2);
+    backdrop-filter:blur(10px);
+}
+
+.main-card{
+
+    max-width:800px;
+    margin:60px auto;
+
+    background:rgba(255,255,255,0.12);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.2);
+
+    border-radius:25px;
+
+    padding:35px;
+
+    color:white;
+
+    box-shadow:0 10px 40px rgba(0,0,0,0.3);
+
+    animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.title h1{
+    font-weight:bold;
+}
+
+.form-select{
+    padding:14px;
+    border-radius:12px;
+}
+
+.btn-checker{
+
+    width:100%;
+    border:none;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    background:white;
+    color:#b00020;
+
+    font-weight:bold;
+}
+
+.btn-checker:hover{
+    background:#f2f2f2;
+}
+
+.result-box{
+
+    display:none;
+
+    margin-top:30px;
+
+    background:rgba(255,255,255,0.15);
+
+    border-radius:15px;
+
+    padding:25px;
+}
+
+.result-box h5{
+    color:#fff;
+}
+
+.result-box p{
+    font-size:18px;
+    font-weight:600;
+}
+
+.badge-custom{
+
+    background:white;
+    color:#b00020;
+
+    padding:8px 15px;
+
+    border-radius:20px;
+
+    font-size:16px;
+}
+
+</style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-dark">
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="#">
+            🩸 Blood Compatibility Checker
+        </a>
+
+        <a href="index.html" class="btn btn-light">
+            Home
+        </a>
+
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="main-card">
+
+        <div class="title">
+
+            <h1>❤️ Blood Compatibility</h1>
+
+            <p>
+                Check who can donate blood to you and who can receive your blood.
+            </p>
+
+        </div>
+
+        <select
+        id="bloodGroup"
+        class="form-select">
+
+            <option value="">
+                Select Blood Group
+            </option>
+
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+            <option>O+</option>
+            <option>O-</option>
+
+        </select>
+
+        <button
+        class="btn-checker mt-3"
+        onclick="checkCompatibility()">
+
+            Check Compatibility
+
+        </button>
+
+        <div
+        id="resultBox"
+        class="result-box">
+
+            <h4 class="mb-4">
+                Selected Group:
+                <span
+                id="selectedGroup"
+                class="badge-custom">
+                </span>
+            </h4>
+
+            <h5>
+                ✅ Can Receive Blood From
+            </h5>
+
+            <p id="receive"></p>
+
+            <hr>
+
+            <h5>
+                🩸 Can Donate Blood To
+            </h5>
+
+            <p id="donate"></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function checkCompatibility(){
+
+const group =
+document.getElementById("bloodGroup").value;
+
+if(group===""){
+
+    alert("Please select a blood group");
+
+    return;
+}
+
+const compatibility = {
+
+"A+" : {
+receive : "A+, A-, O+, O-",
+donate  : "A+, AB+"
+},
+
+"A-" : {
+receive : "A-, O-",
+donate  : "A+, A-, AB+, AB-"
+},
+
+"B+" : {
+receive : "B+, B-, O+, O-",
+donate  : "B+, AB+"
+},
+
+"B-" : {
+receive : "B-, O-",
+donate  : "B+, B-, AB+, AB-"
+},
+
+"AB+" : {
+receive : "All Blood Groups",
+donate  : "AB+"
+},
+
+"AB-" : {
+receive : "AB-, A-, B-, O-",
+donate  : "AB+, AB-"
+},
+
+"O+" : {
+receive : "O+, O-",
+donate  : "O+, A+, B+, AB+"
+},
+
+"O-" : {
+receive : "O-",
+donate  : "All Blood Groups"
+}
+
+};
+
+document.getElementById("selectedGroup").innerText =
+group;
+
+document.getElementById("receive").innerText =
+compatibility[group].receive;
+
+document.getElementById("donate").innerText =
+compatibility[group].donate;
+
+document.getElementById("resultBox").style.display =
+"block";
+
+}
+
+</script>
+
+</body>
+</html>
