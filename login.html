@@ -159,15 +159,37 @@ body::after{
     position:relative;
 }
 
+.password-box .form-control {
+    padding-right:50px;
+}
+
 .eye-btn{
 
     position:absolute;
-    right:10px;
-    top:10px;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
 
     cursor:pointer;
 
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:38px;
+    height:38px;
+    font-size:20px;
+    background:rgba(255,255,255,0.95);
+    border-radius:50%;
     color:#333;
+    border:none;
+    box-shadow:0 2px 8px rgba(0,0,0,0.15);
+    transition:all 0.3s ease;
+}
+
+.eye-btn:hover{
+    background:rgba(255,255,255,1);
+    transform:translateY(-50%) scale(1.05);
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
 }
 
 @media(max-width:768px){
@@ -219,13 +241,9 @@ body::after{
             class="form-control"
             required>
 
-            <span
+            <span id="passwordToggle"
             class="eye-btn"
-            onclick="togglePassword()">
-
-            👁
-
-            </span>
+            onclick="togglePassword('password','passwordToggle')">👁</span>
 
         </div>
 
@@ -273,18 +291,20 @@ body::after{
 
 <script>
 
-function togglePassword(){
+function togglePassword(passwordId, toggleId){
 
-    let password =
-    document.getElementById("password");
+    let password = document.getElementById(passwordId);
+    let toggle = document.getElementById(toggleId);
 
     if(password.type==="password"){
 
         password.type="text";
+        toggle.textContent = "🙈";
 
     }else{
 
         password.type="password";
+        toggle.textContent = "👁";
 
     }
 }
@@ -319,33 +339,20 @@ document
             })
         });
 
-const user =
-await response.json();
+if(response.ok){
 
-if(user != null){
+    const user = await response.json();
 
-    localStorage.setItem(
-    "userName",
-    user.name);
+    localStorage.setItem("userName", user.name);
+    localStorage.setItem("userEmail", user.email);
 
-    localStorage.setItem(
-    "userEmail",
-    user.email);
+    alert("Welcome " + user.name + " ❤️");
 
-    localStorage.setItem(
-    "userPhone",
-    user.phone);
+    window.location.href = "home.html";
 
-    alert(
-    "Welcome " + user.name + " ❤️");
+}else{
 
-    window.location.href =
-    "index.html";
-}
-else{
-
-    alert(
-    "Invalid Email or Password ❌");
+    alert("Invalid Email or Password ❌");
 }
 
     }
