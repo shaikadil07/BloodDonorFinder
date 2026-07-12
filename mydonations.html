@@ -79,7 +79,7 @@ async function loadMyDonations(){
 
         const response =
         await fetch(
-        "http://localhost:8081/api/mydonations/" + email);
+        "https://blooddonorfinder-production.up.railway.app/api/mydonations/" + email);
 
         const donations =
         await response.json();

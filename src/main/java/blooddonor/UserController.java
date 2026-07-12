@@ -27,6 +27,11 @@ public User login(
     return foundUser;
 }
 
+    @GetMapping("/api/users")
+    public java.util.List getAllUsers() {
+        return repository.findAll();
+    }
+
     @GetMapping("/api/test")
     public String test() {
         return "User Controller Working";

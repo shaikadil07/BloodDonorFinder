@@ -301,7 +301,7 @@ async function(e){
 
         const response =
         await fetch(
-        "http://localhost:8081/api/signup",
+        "https://blooddonorfinder-production.up.railway.app/api/signup",
         {
             method:"POST",
 
@@ -310,8 +310,6 @@ async function(e){
             },
 
             body:JSON.stringify({
-
-                id:Date.now(),
 
                 name:name,
 
