@@ -1,6 +1,7 @@
 package blooddonor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +17,7 @@ public class UserController {
     }
 
    @PostMapping("/api/login")
-public User login(
+public ResponseEntity login(
         @RequestBody User user) {
 
     User foundUser =
@@ -24,7 +25,13 @@ public User login(
                     user.getEmail(),
                     user.getPassword());
 
-    return foundUser;
+    if(foundUser != null){
+        return ResponseEntity.ok(foundUser);
+    }
+
+    return ResponseEntity
+            .status(401)
+            .body("Invalid Email or Password");
 }
 
     @GetMapping("/api/users")
