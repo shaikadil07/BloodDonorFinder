@@ -45,7 +45,14 @@ public ResponseEntity<?> login(
 
     @GetMapping("/api/users")
     public java.util.List getAllUsers() {
-        return repository.findAll();
+
+        System.out.println("========== USERS API ==========");
+
+        java.util.List users = repository.findAll();
+
+        System.out.println("Total Users = " + users.size());
+
+        return users;
     }
 
     @GetMapping("/api/test")
