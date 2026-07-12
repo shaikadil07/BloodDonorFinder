@@ -106,6 +106,10 @@ body{
 
 <script>
 
+const API_BASE = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? "http://localhost:8081"
+    : "https://blooddonorfinder-production.up.railway.app";
+
 async function searchDonor() {
 
     let bloodGroup =
@@ -127,16 +131,17 @@ async function searchDonor() {
     try {
 
         let url;
+        let encodedCity = encodeURIComponent(city);
 
         if(city === ""){
 
             url =
-            `https://blooddonorfinder-production.up.railway.app/api/donors/${bloodGroup}`;
+            `${API_BASE}/api/donors/${bloodGroup}`;
 
         }else{
 
             url =
-            `https://blooddonorfinder-production.up.railway.app/api/donors/${bloodGroup}/${city}`;
+            `${API_BASE}/api/donors/${bloodGroup}/${encodedCity}`;
         }
 
         let response = await fetch(url);

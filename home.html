@@ -329,7 +329,7 @@ id="notificationList">
 
 <script>
 
-const API_BASE = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+const API_BASE = (window.location.protocol === "file:" || window.location.hostname === "" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
     ? "http://localhost:8081"
     : "https://blooddonorfinder-production.up.railway.app";
 
@@ -337,14 +337,14 @@ async function loadStats() {
 
     try {
 
-        const usersResponse =
-        await fetch(`${API_BASE}/api/users`);
+        const donorsResponse =
+        await fetch(`${API_BASE}/api/donors`);
 
-        const users =
-        await usersResponse.json();
+        const donors =
+        await donorsResponse.json();
 
         document.getElementById("donorCount")
-                .innerText = users.length;
+                .innerText = donors.length;
 
         const requestResponse =
         await fetch(`${API_BASE}/api/requests`);
@@ -356,7 +356,7 @@ async function loadStats() {
                 .innerText = requests.length;
 
         document.getElementById("livesSaved")
-                .innerText = users.length;
+                .innerText = donors.length + requests.length;
 
     }
     catch(error) {

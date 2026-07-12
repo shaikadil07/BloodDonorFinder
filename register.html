@@ -120,7 +120,7 @@ body{
 
     <div class="text-center mt-4">
 
-        <a href="index.html" class="back-btn">
+        <a href="home.html" class="back-btn">
             ← Back To Home
         </a>
 
@@ -148,6 +148,60 @@ let donor = {
 
         let response = await fetch(
             "http://localhost:8081/api/donors",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(donor)
+            }
+        );
+
+        if(response.ok){
+
+            alert("Donor Registered Successfully ✅");
+
+            document.getElementById("donorForm").reset();
+
+        }else{
+
+            alert("Registration Failed ❌");
+
+        }
+
+    }
+    catch(error){
+
+        alert("Unable to connect to Spring Boot Server ❌");
+
+        console.log(error);
+
+    }
+
+});
+
+const API_BASE = (window.location.protocol === "file:" || window.location.hostname === "" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? "http://localhost:8081"
+    : "https://blooddonorfinder-production.up.railway.app";
+
+document
+.getElementById("donorForm")
+.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+let donor = {
+    name: document.getElementById("name").value,
+    bloodGroup: document.getElementById("bloodGroup").value,
+    city: document.getElementById("city").value,
+    phone: document.getElementById("phone").value,
+    email: localStorage.getItem("userEmail")
+};
+
+    try{
+
+        let response = await fetch(
+            `${API_BASE}/api/donors`,
             {
                 method: "POST",
                 headers: {
