@@ -18,9 +18,10 @@ public class UserController {
         System.out.println("Name: " + user.getName());
         System.out.println("Email: " + user.getEmail());
 
-        User savedUser = repository.save(user);
+        User savedUser = repository.saveAndFlush(user);
 
         System.out.println("Saved User ID: " + savedUser.getId());
+        System.out.println("Total Users: " + repository.count());
 
         return savedUser;
     }
