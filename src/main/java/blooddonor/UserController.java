@@ -12,12 +12,27 @@ public class UserController {
     private UserRepository repository;
 
     @PostMapping("/api/signup")
-    public User signup(@RequestBody User user) {
-        return repository.save(user);
+    public ResponseEntity<?> signup(@RequestBody User user) {
+        try {
+            if (user.getName() == null || user.getName().isBlank()
+                    || user.getEmail() == null || user.getEmail().isBlank()
+                    || user.getPassword() == null || user.getPassword().isBlank()) {
+                return ResponseEntity.badRequest().body("Name, email, and password are required");
+            }
+
+            if (repository.findByEmail(user.getEmail()) != null) {
+                return ResponseEntity.status(409).body("Email already registered");
+            }
+
+            User savedUser = repository.save(user);
+            return ResponseEntity.ok(savedUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Registration failed: " + e.getMessage());
+        }
     }
 
    @PostMapping("/api/login")
-public ResponseEntity login(
+public ResponseEntity<?> login(
         @RequestBody User user) {
 
     User foundUser =

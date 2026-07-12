@@ -249,6 +249,10 @@ body{
 
 <script>
 
+const API_BASE = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? "http://localhost:8081"
+    : "https://blooddonorfinder-production.up.railway.app";
+
 function togglePassword(passwordId, toggleId){
 
     let password = document.getElementById(passwordId);
@@ -301,7 +305,7 @@ async function(e){
 
         const response =
         await fetch(
-        "https://blooddonorfinder-production.up.railway.app/api/signup",
+        `${API_BASE}/api/signup`,
         {
             method:"POST",
 
@@ -331,8 +335,8 @@ async function(e){
         }
         else{
 
-            alert(
-            "Registration Failed ❌");
+            const errorMessage = await response.text();
+            alert(errorMessage || "Registration Failed ❌");
 
         }
 

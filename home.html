@@ -209,7 +209,7 @@ id="notificationList">
         <div class="col-md-4">
             <div class="stat-card bg-white">
                 <h2 id="donorCount">0</h2>
-                <p>Registered Donors</p>
+                <p>Registered Users</p>
             </div>
         </div>
 
@@ -329,21 +329,25 @@ id="notificationList">
 
 <script>
 
+const API_BASE = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? "http://localhost:8081"
+    : "https://blooddonorfinder-production.up.railway.app";
+
 async function loadStats() {
 
     try {
 
-        const donorResponse =
-        await fetch("http://localhost:8081/api/donors");
+        const usersResponse =
+        await fetch(`${API_BASE}/api/users`);
 
-        const donors =
-        await donorResponse.json();
+        const users =
+        await usersResponse.json();
 
         document.getElementById("donorCount")
-                .innerText = donors.length;
+                .innerText = users.length;
 
         const requestResponse =
-        await fetch("http://localhost:8081/api/requests");
+        await fetch(`${API_BASE}/api/requests`);
 
         const requests =
         await requestResponse.json();
@@ -352,7 +356,7 @@ async function loadStats() {
                 .innerText = requests.length;
 
         document.getElementById("livesSaved")
-                .innerText = donors.length + requests.length;
+                .innerText = users.length;
 
     }
     catch(error) {
