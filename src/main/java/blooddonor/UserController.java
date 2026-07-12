@@ -59,4 +59,9 @@ public ResponseEntity<?> login(
     public String test() {
         return "User Controller Working";
     }
+
+    @GetMapping("/api/usercount")
+    public String userCount() {
+        return "Users = " + repository.count();
+    }
 }
