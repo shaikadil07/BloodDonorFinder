@@ -18,6 +18,10 @@ public class UserController {
         System.out.println("Name: " + user.getName());
         System.out.println("Email: " + user.getEmail());
 
+        if (user.getEmail() == null || user.getEmail().isBlank()) {
+            throw new IllegalArgumentException("Email is required");
+        }
+
         User savedUser = repository.saveAndFlush(user);
 
         System.out.println("Saved User ID: " + savedUser.getId());
