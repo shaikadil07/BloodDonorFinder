@@ -29,12 +29,14 @@ public class DatabaseConfig {
         String username = firstNonBlank(
                 environment.getProperty("SPRING_DATASOURCE_USERNAME"),
                 environment.getProperty("POSTGRES_USER"),
+                extractUserFromUrl(url),
                 "sa"
         );
 
         String password = firstNonBlank(
                 environment.getProperty("SPRING_DATASOURCE_PASSWORD"),
                 environment.getProperty("POSTGRES_PASSWORD"),
+                extractPasswordFromUrl(url),
                 ""
         );
 
@@ -58,6 +60,39 @@ public class DatabaseConfig {
             }
         }
         return null;
+    }
+
+    private String extractUserFromUrl(String databaseUrl) {
+        if (databaseUrl == null || databaseUrl.isBlank()) {
+            return null;
+        }
+        try {
+            URI uri = new URI(databaseUrl);
+            String userInfo = uri.getUserInfo();
+            if (userInfo == null || userInfo.isBlank()) {
+                return null;
+            }
+            return userInfo.split(":", 2)[0];
+        } catch (URISyntaxException e) {
+            return null;
+        }
+    }
+
+    private String extractPasswordFromUrl(String databaseUrl) {
+        if (databaseUrl == null || databaseUrl.isBlank()) {
+            return null;
+        }
+        try {
+            URI uri = new URI(databaseUrl);
+            String userInfo = uri.getUserInfo();
+            if (userInfo == null || userInfo.isBlank()) {
+                return null;
+            }
+            String[] parts = userInfo.split(":", 2);
+            return parts.length > 1 ? parts[1] : null;
+        } catch (URISyntaxException e) {
+            return null;
+        }
     }
 
     public static String toJdbcUrl(String databaseUrl) {

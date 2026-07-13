@@ -15,8 +15,9 @@ public class UserController {
     public User signup(@RequestBody User user) {
 
         System.out.println("========== SIGNUP REQUEST ==========");
-        System.out.println("Name: " + user.getName());
-        System.out.println("Email: " + user.getEmail());
+        System.out.println("Registration Data -> Name: " + user.getName());
+        System.out.println("Registration Data -> Email: " + user.getEmail());
+        System.out.println("Registration Data -> Phone: " + user.getPhone());
 
         if (user.getEmail() == null || user.getEmail().isBlank()) {
             throw new IllegalArgumentException("Email is required");
