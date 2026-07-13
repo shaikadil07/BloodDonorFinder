@@ -22,6 +22,11 @@ public class UserController {
             throw new IllegalArgumentException("Email is required");
         }
 
+        User existingUser = repository.findByEmail(user.getEmail());
+        if (existingUser != null) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+
         User savedUser = repository.saveAndFlush(user);
 
         System.out.println("Saved User ID: " + savedUser.getId());
