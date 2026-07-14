@@ -130,57 +130,10 @@ body{
 
 <script>
 
-document
-.getElementById("donorForm")
-.addEventListener("submit", async function(e){
-
-    e.preventDefault();
-
-let donor = {
-    name: document.getElementById("name").value,
-    bloodGroup: document.getElementById("bloodGroup").value,
-    city: document.getElementById("city").value,
-    phone: document.getElementById("phone").value,
-    email: localStorage.getItem("userEmail")
-};
-
-    try{
-
-        let response = await fetch(
-    `${API_BASE}/api/donors`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(donor)
-            }
-        );
-
-        if(response.ok){
-
-            alert("Donor Registered Successfully ✅");
-
-            document.getElementById("donorForm").reset();
-
-        }else{
-
-            alert("Registration Failed ❌");
-
-        }
-
-    }
-    catch(error){
-
-        alert("Unable to connect to Spring Boot Server ❌");
-
-        console.log(error);
-
-    }
-
-});
-
-const API_BASE = (window.location.protocol === "file:" || window.location.hostname === "" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+const API_BASE = (window.location.protocol === "file:" ||
+                  window.location.hostname === "" ||
+                  window.location.hostname === "localhost" ||
+                  window.location.hostname === "127.0.0.1")
     ? "http://localhost:8081"
     : "https://blooddonorfinder-production.up.railway.app";
 
@@ -190,15 +143,15 @@ document
 
     e.preventDefault();
 
-let donor = {
-    name: document.getElementById("name").value,
-    bloodGroup: document.getElementById("bloodGroup").value,
-    city: document.getElementById("city").value,
-    phone: document.getElementById("phone").value,
-    email: localStorage.getItem("userEmail")
-};
+    let donor = {
+        name: document.getElementById("name").value,
+        bloodGroup: document.getElementById("bloodGroup").value,
+        city: document.getElementById("city").value,
+        phone: document.getElementById("phone").value,
+        email: localStorage.getItem("userEmail")
+    };
 
-    try{
+    try {
 
         let response = await fetch(
             `${API_BASE}/api/donors`,
@@ -212,24 +165,15 @@ let donor = {
         );
 
         if(response.ok){
-
             alert("Donor Registered Successfully ✅");
-
             document.getElementById("donorForm").reset();
-
-        }else{
-
+        } else {
             alert("Registration Failed ❌");
-
         }
 
-    }
-    catch(error){
-
+    } catch(error) {
         alert("Unable to connect to Spring Boot Server ❌");
-
         console.log(error);
-
     }
 
 });
