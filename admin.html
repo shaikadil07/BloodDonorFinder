@@ -131,8 +131,8 @@ async function loadAdminData() {
 
         // Load Donors
 
-        const donorResponse =
-        await fetch("http://localhost:8081/api/donors");
+       const donorResponse =
+    await fetch(`${API_BASE}/api/donors`);
 
         const donors =
         await donorResponse.json();
@@ -163,7 +163,7 @@ async function loadAdminData() {
         // Load Requests
 
         const requestResponse =
-        await fetch("http://localhost:8081/api/requests");
+    await fetch(`${API_BASE}/api/requests`);
 
         const requests =
         await requestResponse.json();

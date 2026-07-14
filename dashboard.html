@@ -71,7 +71,7 @@ async function loadDashboard(){
     try{
 
         const donors =
-        await fetch("http://localhost:8081/api/donors");
+        await fetch(`${API_BASE}/api/donors`);
 
         const donorData =
         await donors.json();
@@ -80,8 +80,8 @@ async function loadDashboard(){
         .getElementById("donorCount")
         .innerText = donorData.length;
 
-        const requests =
-        await fetch("http://localhost:8081/api/requests");
+       const requests =
+    await fetch(`${API_BASE}/api/requests`);
 
         const requestData =
         await requests.json();
